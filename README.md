@@ -74,7 +74,7 @@ python -m pip install -r requirements-dev.txt
 python -m pytest -q
 ```
 
-The shipped evidence records 43 passing tests and nine passing browser interaction checks. Browser checks exercised the exact UI files against real FastAPI handlers through an in-process transport because the build environment blocks Chromium loopback navigation. They are not a hosted deployment test. Docker, remote GitHub Actions, pySHACL and a company integration were not run.
+The shipped evidence records 43 passing tests and nine passing browser interaction checks. Browser checks exercised the exact UI files against real FastAPI handlers through an in-process transport because the build environment blocks Chromium loopback navigation. They are not a hosted-deployment test. GitHub Actions runs the 43-test Python suite on repository pushes. Docker, pySHACL and a company integration were not run in the original offline build.
 
 Optional browser checks need Playwright and Chromium, neither required by the application:
 
@@ -86,28 +86,16 @@ python scripts/check_browser.py
 
 The dependency files pin direct packages, not the complete transitive dependency graph. Use your approved resolver, lockfile, SBOM and vulnerability review before work-side adoption. The test configuration suppresses only known RDFLib/pyparsing deprecation messages; it does not suppress test failures or arbitrary warnings.
 
-## Repository status and private publication
+## Repository
 
-**This delivery contains a complete local Git repository snapshot and a portable Git bundle. A remote GitHub repository was not created from this chat.** The connected GitHub tool could read and modify existing repositories but did not expose repository creation, and the build environment had no authenticated GitHub CLI.
-
-After extracting the ZIP and authenticating your own GitHub CLI, run:
+This repository is private. Clone it with your authenticated GitHub account:
 
 ```bash
-gh auth login
-python scripts/publish_private.py
+git clone https://github.com/paulmalmquist/signal-atlas-rdf-telemetry-lab.git
+cd signal-atlas-rdf-telemetry-lab
 ```
 
-The script creates **paulmalmquist/signal-atlas-rdf-telemetry-lab** with `--private`, pushes the source and verifies visibility. It refuses an existing repository or any existing `origin` rather than risk publishing to the wrong place. It never asks you to paste tokens into a file.
-
-To restore the supplied Git history instead of initializing from the ZIP, clone the separate bundle into an empty directory:
-
-```bash
-git clone Signal_Atlas_Repository.bundle signal-atlas
-cd signal-atlas
-git remote remove origin
-```
-
-A bundle clone's origin points at the local bundle; remove that local origin before using the publishing script. GitHub publication is a user-authenticated action, not something already completed.
+The downloadable delivery also includes a portable Git bundle for offline transfer. `scripts/publish_private.py` is retained as a reusable example for publishing a restored bundle to a new private repository; it refuses an existing destination or `origin` rather than overwriting either one.
 
 ## Optional Docker path
 
