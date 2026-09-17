@@ -1,0 +1,48 @@
+{
+  "source": "Mock PLM",
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "components": [
+    {
+      "id": "rig-01",
+      "label": "Aster ground-test rig",
+      "kind": "TestRig",
+      "parent": null,
+      "revision": "A"
+    },
+    {
+      "id": "fluid-loop",
+      "label": "Fluid loop",
+      "kind": "Assembly",
+      "parent": "rig-01",
+      "revision": "A"
+    },
+    {
+      "id": "manifold-a",
+      "label": "Manifold A",
+      "kind": "Component",
+      "parent": "fluid-loop",
+      "revision": "C"
+    },
+    {
+      "id": "manifold-b",
+      "label": "Manifold B",
+      "kind": "Component",
+      "parent": "fluid-loop",
+      "revision": "B"
+    },
+    {
+      "id": "fixture",
+      "label": "Structural fixture",
+      "kind": "Component",
+      "parent": "rig-01",
+      "revision": "A"
+    },
+    {
+      "id": "daq",
+      "label": "Acquisition enclosure",
+      "kind": "Component",
+      "parent": "rig-01",
+      "revision": "D"
+    }
+  ]
+}

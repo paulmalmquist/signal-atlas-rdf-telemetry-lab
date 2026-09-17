@@ -1,0 +1,42 @@
+{
+  "source": "Mock test execution",
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "runs": [
+    {
+      "id": "T-101",
+      "label": "Baseline hold",
+      "start": "2026-09-09T12:00:00Z",
+      "end": "2026-09-09T12:01:00Z",
+      "configuration": "CFG-A",
+      "phase": "hold",
+      "rig": "rig-01"
+    },
+    {
+      "id": "T-102",
+      "label": "Repeat hold",
+      "start": "2026-09-11T12:00:00Z",
+      "end": "2026-09-11T12:01:00Z",
+      "configuration": "CFG-A",
+      "phase": "hold",
+      "rig": "rig-01"
+    },
+    {
+      "id": "T-103",
+      "label": "Relocated sensor",
+      "start": "2026-09-12T12:00:00Z",
+      "end": "2026-09-12T12:01:00Z",
+      "configuration": "CFG-A",
+      "phase": "hold",
+      "rig": "rig-01"
+    },
+    {
+      "id": "T-104",
+      "label": "Follow-up hold",
+      "start": "2026-09-13T12:00:00Z",
+      "end": "2026-09-13T12:01:00Z",
+      "configuration": "CFG-A",
+      "phase": "hold",
+      "rig": "rig-01"
+    }
+  ]
+}

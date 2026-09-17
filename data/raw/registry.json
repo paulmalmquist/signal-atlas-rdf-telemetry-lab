@@ -1,0 +1,205 @@
+{
+  "source": "Mock instrument registry",
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "sensors": [
+    {
+      "id": "P-101",
+      "label": "Primary pressure sensor",
+      "property": "Pressure",
+      "unit": "KiloPA",
+      "unit_label": "kPa",
+      "component": "manifold-a"
+    },
+    {
+      "id": "P-102",
+      "label": "Reference pressure sensor",
+      "property": "Pressure",
+      "unit": "KiloPA",
+      "unit_label": "kPa",
+      "component": "manifold-b"
+    },
+    {
+      "id": "P-103",
+      "label": "Auxiliary pressure sensor",
+      "property": "Pressure",
+      "unit": "KiloPA",
+      "unit_label": "kPa",
+      "component": "manifold-a"
+    },
+    {
+      "id": "T-201",
+      "label": "Loop temperature sensor",
+      "property": "Temperature",
+      "unit": "DEG_C",
+      "unit_label": "\u00b0C",
+      "component": "manifold-a"
+    },
+    {
+      "id": "V-301",
+      "label": "Fixture vibration sensor",
+      "property": "Acceleration",
+      "unit": "M-PER-SEC2",
+      "unit_label": "m/s\u00b2",
+      "component": "fixture"
+    },
+    {
+      "id": "AUX-401",
+      "label": "Supply voltage sensor",
+      "property": "Voltage",
+      "unit": "V",
+      "unit_label": "V",
+      "component": "daq"
+    }
+  ],
+  "channels": [
+    {
+      "id": "CH-P-101",
+      "sensor": "P-101",
+      "label": "Primary pressure sensor",
+      "property": "Pressure",
+      "unit": "KiloPA",
+      "sample_rate_hz": 10,
+      "raw_tag": "DAQ/P_101"
+    },
+    {
+      "id": "CH-P-102",
+      "sensor": "P-102",
+      "label": "Reference pressure sensor",
+      "property": "Pressure",
+      "unit": "KiloPA",
+      "sample_rate_hz": 10,
+      "raw_tag": "DAQ/P_102"
+    },
+    {
+      "id": "CH-P-103",
+      "sensor": "P-103",
+      "label": "Auxiliary pressure sensor",
+      "property": "Pressure",
+      "unit": "KiloPA",
+      "sample_rate_hz": 10,
+      "raw_tag": "DAQ/P_103"
+    },
+    {
+      "id": "CH-T-201",
+      "sensor": "T-201",
+      "label": "Loop temperature sensor",
+      "property": "Temperature",
+      "unit": "DEG_C",
+      "sample_rate_hz": 10,
+      "raw_tag": "DAQ/T_201"
+    },
+    {
+      "id": "CH-V-301",
+      "sensor": "V-301",
+      "label": "Fixture vibration sensor",
+      "property": "Acceleration",
+      "unit": "M-PER-SEC2",
+      "sample_rate_hz": 10,
+      "raw_tag": "DAQ/V_301"
+    },
+    {
+      "id": "CH-AUX-401",
+      "sensor": "AUX-401",
+      "label": "Supply voltage sensor",
+      "property": "Voltage",
+      "unit": null,
+      "sample_rate_hz": 10,
+      "raw_tag": "DAQ/AUX_401"
+    }
+  ],
+  "deployments": [
+    {
+      "id": "DEP-P-101-A",
+      "sensor": "P-101",
+      "component": "manifold-a",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-09-12T00:00:00Z"
+    },
+    {
+      "id": "DEP-P-102-A",
+      "sensor": "P-102",
+      "component": "manifold-b",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "DEP-P-103-A",
+      "sensor": "P-103",
+      "component": "manifold-a",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "DEP-T-201-A",
+      "sensor": "T-201",
+      "component": "manifold-a",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "DEP-V-301-A",
+      "sensor": "V-301",
+      "component": "fixture",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "DEP-AUX-401-A",
+      "sensor": "AUX-401",
+      "component": "daq",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z"
+    },
+    {
+      "id": "DEP-P-101-B",
+      "sensor": "P-101",
+      "component": "manifold-b",
+      "valid_from": "2026-09-12T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z"
+    }
+  ],
+  "aliases": [
+    {
+      "system": "DAQ",
+      "source_id": "DAQ/P_101",
+      "canonical_sensor": "P-101",
+      "mapping_status": "approved",
+      "mapping_version": "1"
+    },
+    {
+      "system": "DAQ",
+      "source_id": "DAQ/P_102",
+      "canonical_sensor": "P-102",
+      "mapping_status": "approved",
+      "mapping_version": "1"
+    },
+    {
+      "system": "DAQ",
+      "source_id": "DAQ/P_103",
+      "canonical_sensor": "P-103",
+      "mapping_status": "approved",
+      "mapping_version": "1"
+    },
+    {
+      "system": "DAQ",
+      "source_id": "DAQ/T_201",
+      "canonical_sensor": "T-201",
+      "mapping_status": "approved",
+      "mapping_version": "1"
+    },
+    {
+      "system": "DAQ",
+      "source_id": "DAQ/V_301",
+      "canonical_sensor": "V-301",
+      "mapping_status": "approved",
+      "mapping_version": "1"
+    },
+    {
+      "system": "DAQ",
+      "source_id": "DAQ/AUX_401",
+      "canonical_sensor": "AUX-401",
+      "mapping_status": "approved",
+      "mapping_version": "1"
+    }
+  ]
+}

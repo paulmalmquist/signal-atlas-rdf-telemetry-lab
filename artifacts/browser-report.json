@@ -1,0 +1,15 @@
+{
+  "transport": "Real FastAPI TestClient via browser binding; Chromium loopback navigation is blocked in the build environment. No network deployment test claimed.",
+  "checks": [
+    "Overview loads real backend counts and investigation links",
+    "Investigation runs actual SPARQL and returns three results",
+    "Edited free-form SPARQL returns six sensors",
+    "Telemetry selection updates values, historical context and evidence state",
+    "Entity search and graph recenter follow actual RDF relationships",
+    "Both what-if actions recompute isolated graphs",
+    "Knowledge checks and local learning progress work",
+    "Source fixture inspector opens and closes",
+    "All seven pages fit 390px mobile width without document overflow"
+  ],
+  "page_errors": []
+}

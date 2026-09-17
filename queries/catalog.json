@@ -1,0 +1,110 @@
+[
+  {
+    "id": "01-sensors",
+    "title": "Meet your sensors",
+    "concept": "SELECT \u00b7 triples \u00b7 types",
+    "question": "Start with physical instruments, not channel-name strings.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?sensor ?label ?property WHERE {\n  ?sensor a sosa:Sensor ; rdfs:label ?label ; sosa:observes ?property .\n} ORDER BY ?sensor\n",
+    "explanation": "Six instruments. The same ?sensor binds facts together, just like a join key. a abbreviates rdf:type.",
+    "challenge": "Add FILTER(?property = ex:Pressure) inside WHERE. You should get three pressure sensors."
+  },
+  {
+    "id": "02-deployments",
+    "title": "Where was it installed?",
+    "concept": "JOIN \u00b7 identity \u00b7 time",
+    "question": "Find installations rather than assigning one timeless location to a sensor.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?sensor ?component ?from ?to WHERE {\n  ?deployment a ex:Deployment ; ex:sensor ?sensor ; ex:component ?component ;\n              ex:validFrom ?from ; ex:validTo ?to .\n} ORDER BY ?sensor ?from\n",
+    "explanation": "Seven deployment records. P-101 moved from Manifold A to Manifold B on September 12.",
+    "challenge": "Filter for ex:P-101, then compare the two half-open intervals [from, to)."
+  },
+  {
+    "id": "03-bom",
+    "title": "Follow the hardware hierarchy",
+    "concept": "PROPERTY PATH \u00b7 +",
+    "question": "Walk one or more direct BOM links.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?component ?ancestor WHERE {\n  VALUES ?component { ex:manifold-a ex:manifold-b }\n  ?component ex:partOf+ ?ancestor .\n} ORDER BY ?component ?ancestor\n",
+    "explanation": "Four component/ancestor pairs. + means one or more hops; * would also include the starting component.",
+    "challenge": "Replace + with * and explain the two extra rows. A path match is not a newly stored inferred triple."
+  },
+  {
+    "id": "04-observations",
+    "title": "Numbers with context",
+    "concept": "OPTIONAL \u00b7 typed values",
+    "question": "Observe the difference between window summaries and raw samples.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?run ?sensor ?mean ?unit ?goodSamples WHERE {\n  ?obs a sosa:Observation ; ex:run ?run ; sosa:madeBySensor ?sensor ;\n       sosa:hasSimpleResult ?mean ; ex:goodSamples ?goodSamples ; ex:channel ?channel .\n  OPTIONAL { ?channel ex:unit ?unit }\n} ORDER BY ?run ?sensor\n",
+    "explanation": "24 summary observations, not 14,424 raw samples. AUX-401 has unbound metadata units, retained by OPTIONAL.",
+    "challenge": "Remove OPTIONAL and its braces. Four rows disappear; inner joins can hide incomplete metadata."
+  },
+  {
+    "id": "05-expired",
+    "title": "Which results need review?",
+    "concept": "FILTER NOT EXISTS \u00b7 dates",
+    "question": "Expired evidence is not proof the hardware failed.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT DISTINCT ?run ?sensor ?component ?expiry WHERE {\n  ?obs a sosa:Observation ; ex:run ?run ;\n       sosa:madeBySensor ?sensor ; sosa:hasFeatureOfInterest ?component ;\n       ex:windowStart ?start ; ex:windowEnd ?end .\n  ?cert a ex:Calibration ; ex:sensor ?sensor ; ex:validTo ?expiry ; ex:status \"approved\" .\n  FILTER(?expiry <= ?end)\n  FILTER NOT EXISTS {\n    ?cover a ex:Calibration ; ex:sensor ?sensor ; ex:status \"approved\" ;\n           ex:validFrom ?from ; ex:validTo ?to .\n    FILTER(?from <= ?start && ?to > ?end)\n  }\n} ORDER BY ?run\n",
+    "explanation": "Three results use P-101 after the old certificate expired, with no covering approved replacement in this snapshot.",
+    "challenge": "Use the what-if certificate experiment. A covering newer certificate must suppress a false expired-calibration alert."
+  },
+  {
+    "id": "06-unknown",
+    "title": "Find missing evidence",
+    "concept": "NOT EXISTS \u00b7 unknown \u2260 false",
+    "question": "Distinguish unknown calibration from a known expired certificate.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT DISTINCT ?run ?sensor WHERE {\n  ?obs a sosa:Observation ; ex:run ?run ; sosa:madeBySensor ?sensor .\n  FILTER NOT EXISTS { ?cert a ex:Calibration ; ex:sensor ?sensor }\n} ORDER BY ?run ?sensor\n",
+    "explanation": "Four P-103 results lack any certificate in this snapshot. Do not describe them as proven uncalibrated.",
+    "challenge": "Explain why \u201cno matching triple\u201d does not establish that a real-world calibration never happened."
+  },
+  {
+    "id": "07-impact",
+    "title": "Trace the evidence impact",
+    "concept": "MULTI-HOP JOIN \u00b7 reports",
+    "question": "Connect questionable evidence to draft reports and the relevant requirement.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT DISTINCT ?run ?sensor ?component ?report ?requirement WHERE {\n  ?obs a sosa:Observation ; ex:run ?run ;\n       sosa:madeBySensor ?sensor ; sosa:hasFeatureOfInterest ?component ;\n       ex:windowStart ?start ; ex:windowEnd ?end .\n  ?cert a ex:Calibration ; ex:sensor ?sensor ; ex:validTo ?expiry ; ex:status \"approved\" .\n  FILTER(?expiry <= ?end)\n  FILTER NOT EXISTS {\n    ?cover a ex:Calibration ; ex:sensor ?sensor ; ex:status \"approved\" ;\n           ex:validFrom ?from ; ex:validTo ?to .\n    FILTER(?from <= ?start && ?to > ?end)\n  }\n  ?report a ex:Report ; ex:forRun ?run ; ex:addresses ?requirement .\n  ?requirement ex:property ex:Pressure .\n} ORDER BY ?run\n",
+    "explanation": "Three draft evidence packages and the pressure-evidence requirement need review. The graph identifies a review scope, not a disposition.",
+    "challenge": "Add ?report ex:status ?status and include ?status in SELECT. Where should human approval happen?"
+  },
+  {
+    "id": "08-provenance",
+    "title": "Ask who supplied a fact",
+    "concept": "GRAPH \u00b7 provenance",
+    "question": "Keep source assertions attributable even when IDs join across systems.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?graph ?predicate ?object WHERE {\n  GRAPH ?graph { ex:P-101 ?predicate ?object }\n} ORDER BY ?graph ?predicate\n",
+    "explanation": "Facts about P-101 remain in the instrument-registry named graph. Provenance metadata for each graph is in the catalog graph.",
+    "challenge": "Replace ex:P-101 with ex:CAL-P-101. Explain why a graph name is not itself proof that a source is correct."
+  },
+  {
+    "id": "09-construct",
+    "title": "Build a review subgraph",
+    "concept": "CONSTRUCT \u00b7 explicit rule",
+    "question": "Derive a temporary set of review facts without changing the source dataset.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nCONSTRUCT {\n  ?obs a ex:ReviewCandidate ; ex:reviewReason \"No covering approved calibration; prior evidence expired\" ;\n       ex:affectedReport ?report ; prov:wasDerivedFrom ?cert ; ex:rule ex:impact-rule-v1 .\n} WHERE {\n  ?obs a sosa:Observation ; ex:run ?run ;\n       sosa:madeBySensor ?sensor ; sosa:hasFeatureOfInterest ?component ;\n       ex:windowStart ?start ; ex:windowEnd ?end .\n  ?cert a ex:Calibration ; ex:sensor ?sensor ; ex:validTo ?expiry ; ex:status \"approved\" .\n  FILTER(?expiry <= ?end)\n  FILTER NOT EXISTS {\n    ?cover a ex:Calibration ; ex:sensor ?sensor ; ex:status \"approved\" ;\n           ex:validFrom ?from ; ex:validTo ?to .\n    FILTER(?from <= ?start && ?to > ?end)\n  }\n  ?report ex:forRun ?run .\n}\n",
+    "explanation": "15 derived triples for three observations. CONSTRUCT returns a graph; it does not INSERT it. No automatic OWL reasoning is running.",
+    "challenge": "Inspect prov:wasDerivedFrom and the rule identifier. What extra approval would publication of this graph require?"
+  },
+  {
+    "id": "10-contract",
+    "title": "Is a channel missing its unit?",
+    "concept": "ASK \u00b7 data contract",
+    "question": "Use a Boolean check, then inspect the separate shape-validation report.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nASK {\n  ?channel a ex:Channel .\n  FILTER NOT EXISTS { ?channel ex:unit ?unit }\n}\n",
+    "explanation": "True in the baseline: CH-AUX-401 lacks a declared unit. Raw sample units are still present; the adapter does not silently fix the registry.",
+    "challenge": "Run the unit-repair experiment. Only the isolated copy is changed; source fixtures remain intact."
+  },
+  {
+    "id": "11-comparable",
+    "title": "Select comparable evidence",
+    "concept": "VALUES \u00b7 validity \u00b7 phase",
+    "question": "Match property, unit, procedure, test phase and configuration before drilling into samples.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?run ?sensor ?channel ?mean WHERE {\n  ?obs a sosa:Observation ; ex:run ?run ; sosa:madeBySensor ?sensor ;\n       sosa:observedProperty ex:Pressure ; sosa:usedProcedure ex:mean-window-v1 ;\n       ex:unit unit:KiloPA ; ex:channel ?channel ; sosa:hasSimpleResult ?mean ;\n       ex:windowStart ?start ; ex:windowEnd ?end .\n  ?run ex:phase \"hold\" ; ex:configuration \"CFG-A\" .\n  FILTER EXISTS {\n    ?cert a ex:Calibration ; ex:sensor ?sensor ; ex:status \"approved\" ;\n          ex:validFrom ?from ; ex:validTo ?to .\n    FILTER(?from <= ?start && ?to > ?end)\n  }\n} ORDER BY ?run ?sensor\n",
+    "explanation": "Five summaries: P-101 only at T-101, plus P-102 at every run. This is eligibility filtering, not proof of statistical comparability.",
+    "challenge": "Open a result in Telemetry. SPARQL finds the context; parameterized SQL retrieves the sample series."
+  },
+  {
+    "id": "12-sources",
+    "title": "Inventory the assertion sources",
+    "concept": "GRAPH \u00b7 GROUP BY",
+    "question": "Understand the dataset boundary before interpreting absence.",
+    "query": "PREFIX ex: <https://example.org/signal-atlas/>\nPREFIX sosa: <http://www.w3.org/ns/sosa/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX xsd: <http://www.w3.org/2001/XMLSchema#>\nPREFIX unit: <http://qudt.org/vocab/unit/>\n\nSELECT ?graph (COUNT(*) AS ?triples) WHERE {\n  GRAPH ?graph { ?s ?p ?o }\n} GROUP BY ?graph ORDER BY ?graph\n",
+    "explanation": "Nine nonempty named graphs: ontology, six source registries, telemetry summaries, and a provenance catalog.",
+    "challenge": "Inspect the Sources page: file hash, snapshot time, version and source attribution. None proves the real world is complete."
+  }
+]

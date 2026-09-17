@@ -1,0 +1,12 @@
+{
+  "checks": [
+    "Actual single-file HTML boots without external asset requests",
+    "Saved query returns three rows and arbitrary editing is disabled",
+    "Offline sample selection uses embedded 601-point series",
+    "Offline what-if views show explicitly saved scenario outcomes",
+    "All seven offline pages fit a 390px viewport"
+  ],
+  "page_errors": [],
+  "external_requests": [],
+  "transport": "Actual standalone HTML via set_content; no server, no API binding, no external assets."
+}

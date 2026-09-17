@@ -1,0 +1,16 @@
+{
+  "synthetic": true,
+  "seed": 42,
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "sample_rate_hz": 10,
+  "notice": "Entirely invented ground-test data. Not a physics simulation, acceptance criterion, or flight decision tool.",
+  "files": {
+    "calibration.json": "adf8720b11f2bb3925b2d995c738b9628e9fe1fb0fe27b8c14fc4c8e451ed4c6",
+    "plm.json": "d7f43bb6ab649fe7a0b64067b28523e71ae8bab6e0284af72848c081797908b4",
+    "qms.json": "e7f231ab103e5b6cde0b4e232fcd17eeb42a7f43caa33df2c366416358343d42",
+    "registry.json": "f042316cb2bd9a897bc17173e02bab4be75d2b8f8d146a389a8ae309682abc81",
+    "requirements.json": "4b032baaa6f63ece491101890c4ba9715544ab8459d05fd16dc101cbbaf222d3",
+    "telemetry.csv": "0a7365f5410df4c3e3f78adbcff30a6dce9e5e096120ce193c8d16ab21e2f0df",
+    "tests.json": "73c8fdef2eacfe212c3ad24a03c46c02ed746ddebe76626195ccbf7f64d2f43a"
+  }
+}

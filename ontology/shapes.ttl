@@ -1,0 +1,22 @@
+@prefix ex: <https://example.org/signal-atlas/> .
+@prefix sh: <http://www.w3.org/ns/shacl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+
+# Portable SHACL Core shapes. This repo ships a deliberately bounded local evaluator
+# for exactly targetClass + direct property paths + min/maxCount, datatype and nodeKind.
+# Run scripts/validate_full_shacl.py with optional pySHACL for independent full validation.
+ex:ChannelShape a sh:NodeShape ; sh:targetClass ex:Channel ;
+  sh:property [ sh:path ex:unit ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ;
+                sh:message "Channel needs exactly one declared unit IRI." ] ;
+  sh:property [ sh:path ex:sensor ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] .
+ex:ObservationShape a sh:NodeShape ; sh:targetClass sosa:Observation ;
+  sh:property [ sh:path sosa:madeBySensor ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path sosa:hasFeatureOfInterest ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path sosa:observedProperty ; sh:minCount 1 ; sh:maxCount 1 ; sh:nodeKind sh:IRI ] ;
+  sh:property [ sh:path sosa:hasSimpleResult ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ] ;
+  sh:property [ sh:path prov:wasDerivedFrom ; sh:minCount 1 ; sh:nodeKind sh:IRI ] .
+ex:DeploymentShape a sh:NodeShape ; sh:targetClass ex:Deployment ;
+  sh:property [ sh:path ex:validFrom ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+  sh:property [ sh:path ex:validTo ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] .

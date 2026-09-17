@@ -1,0 +1,29 @@
+@prefix ex: <https://example.org/signal-atlas/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix sosa: <http://www.w3.org/ns/sosa/> .
+@prefix prov: <http://www.w3.org/ns/prov#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+ex:Component a rdfs:Class ; rdfs:label "Serialized component" .
+ex:Assembly a rdfs:Class ; rdfs:subClassOf ex:Component .
+ex:TestRig a rdfs:Class ; rdfs:subClassOf ex:Assembly .
+ex:Channel a rdfs:Class ; rdfs:label "Acquisition channel definition" .
+ex:Deployment a rdfs:Class ; rdfs:label "Time-bounded sensor installation" .
+ex:Calibration a rdfs:Class ; rdfs:label "Calibration evidence with validity interval" .
+ex:TestRun a rdfs:Class .
+ex:Requirement a rdfs:Class .
+ex:Report a rdfs:Class .
+ex:ReviewCandidate a rdfs:Class .
+ex:WindowSummary a rdfs:Class ; rdfs:subClassOf sosa:Observation .
+ex:partOf a rdf:Property ; rdfs:label "part of" ;
+  rdfs:comment "Direct BOM parent in this snapshot. Property paths traverse it explicitly; no automatic transitive inference is enabled." .
+ex:validFrom a rdf:Property ; rdfs:range xsd:dateTime .
+ex:validTo a rdf:Property ; rdfs:range xsd:dateTime ;
+  rdfs:comment "Exclusive upper bound. A sample at validTo is outside this interval." .
+ex:Pressure a sosa:ObservableProperty ; rdfs:label "Pressure" .
+ex:Temperature a sosa:ObservableProperty ; rdfs:label "Temperature" .
+ex:Acceleration a sosa:ObservableProperty ; rdfs:label "Acceleration" .
+ex:Voltage a sosa:ObservableProperty ; rdfs:label "Voltage" .
+ex:mean-window-v1 a sosa:Procedure ; rdfs:label "Arithmetic mean of good-quality samples, version 1" .
+ex:impact-rule-v1 a prov:Plan ; rdfs:label "No covering approved calibration: review evidence, do not invalidate test" .

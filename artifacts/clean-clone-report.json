@@ -1,0 +1,17 @@
+{
+  "bundle_clone": "success",
+  "clean_clone_tests": 43,
+  "loopback_http_smoke": {
+    "health": {
+      "status": "ok",
+      "mode": "synthetic-local",
+      "version": "1.0.0",
+      "graph_ready": true
+    },
+    "html": "200",
+    "javascript": "200",
+    "editable_query_sensor_rows": 6,
+    "raw_series_points": 601
+  },
+  "transport_note": "Real loopback HTTP checked with Python urllib; browser interaction tests use in-process transport due to browser policy."
+}

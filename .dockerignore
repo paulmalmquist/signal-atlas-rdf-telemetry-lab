@@ -1,0 +1,13 @@
+.git
+.venv
+__pycache__
+.pytest_cache
+.env*
+*.bundle
+artifacts
+preview
+training
+docs
+work-data
+company-data
+secrets

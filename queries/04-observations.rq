@@ -1,0 +1,12 @@
+PREFIX ex: <https://example.org/signal-atlas/>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+
+SELECT ?run ?sensor ?mean ?unit ?goodSamples WHERE {
+  ?obs a sosa:Observation ; ex:run ?run ; sosa:madeBySensor ?sensor ;
+       sosa:hasSimpleResult ?mean ; ex:goodSamples ?goodSamples ; ex:channel ?channel .
+  OPTIONAL { ?channel ex:unit ?unit }
+} ORDER BY ?run ?sensor

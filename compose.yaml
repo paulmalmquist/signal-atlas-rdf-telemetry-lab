@@ -1,0 +1,10 @@
+services:
+  signal-atlas:
+    build: .
+    ports:
+      - "127.0.0.1:8000:8000"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    # Teaching prototype only. Do not change this to a public ingress.

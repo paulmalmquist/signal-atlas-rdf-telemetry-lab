@@ -1,0 +1,46 @@
+{
+  "source": "Mock calibration registry",
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "certificates": [
+    {
+      "id": "CAL-P-101",
+      "sensor": "P-101",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-09-10T00:00:00Z",
+      "status": "approved",
+      "revision": "1"
+    },
+    {
+      "id": "CAL-P-102",
+      "sensor": "P-102",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z",
+      "status": "approved",
+      "revision": "1"
+    },
+    {
+      "id": "CAL-T-201",
+      "sensor": "T-201",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z",
+      "status": "approved",
+      "revision": "1"
+    },
+    {
+      "id": "CAL-V-301",
+      "sensor": "V-301",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z",
+      "status": "approved",
+      "revision": "1"
+    },
+    {
+      "id": "CAL-AUX-401",
+      "sensor": "AUX-401",
+      "valid_from": "2026-09-01T00:00:00Z",
+      "valid_to": "2026-10-01T00:00:00Z",
+      "status": "approved",
+      "revision": "1"
+    }
+  ]
+}

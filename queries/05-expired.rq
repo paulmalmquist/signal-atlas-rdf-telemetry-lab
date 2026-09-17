@@ -1,0 +1,19 @@
+PREFIX ex: <https://example.org/signal-atlas/>
+PREFIX sosa: <http://www.w3.org/ns/sosa/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX unit: <http://qudt.org/vocab/unit/>
+
+SELECT DISTINCT ?run ?sensor ?component ?expiry WHERE {
+  ?obs a sosa:Observation ; ex:run ?run ;
+       sosa:madeBySensor ?sensor ; sosa:hasFeatureOfInterest ?component ;
+       ex:windowStart ?start ; ex:windowEnd ?end .
+  ?cert a ex:Calibration ; ex:sensor ?sensor ; ex:validTo ?expiry ; ex:status "approved" .
+  FILTER(?expiry <= ?end)
+  FILTER NOT EXISTS {
+    ?cover a ex:Calibration ; ex:sensor ?sensor ; ex:status "approved" ;
+           ex:validFrom ?from ; ex:validTo ?to .
+    FILTER(?from <= ?start && ?to > ?end)
+  }
+} ORDER BY ?run

@@ -1,0 +1,13 @@
+{
+  "source": "Mock QMS",
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "issues": [
+    {
+      "id": "NCR-017",
+      "component": "manifold-a",
+      "label": "Synthetic inspection follow-up",
+      "state": "open",
+      "revision": "1"
+    }
+  ]
+}

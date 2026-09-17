@@ -1,0 +1,55 @@
+{
+  "build_date": "2026-09-16",
+  "synthetic_snapshot_at": "2026-09-14T00:00:00Z",
+  "counts": {
+    "samples": 14424,
+    "triples": 928,
+    "observations": 24,
+    "sensors": 6,
+    "sources": 7,
+    "graphs": 9
+  },
+  "automated_tests": {
+    "passed": 43,
+    "evidence": "artifacts/pytest-results.xml"
+  },
+  "browser_checks": {
+    "passed": 9,
+    "page_errors": 0,
+    "transport": "Exact UI assets + real FastAPI TestClient; not a hosted browser test"
+  },
+  "offline_preview_checks": {
+    "passed": 5,
+    "external_requests": 0,
+    "page_errors": 0,
+    "query_mode": "read-only saved results"
+  },
+  "training": {
+    "slides": 26,
+    "speaker_note_parts": 26,
+    "pdf_pages": 26,
+    "visual_review": "All 26 pages rendered at 110 dpi and reviewed in three contact sheets"
+  },
+  "runtime": {
+    "python": "3.13.5",
+    "fastapi": "0.128.2",
+    "rdflib": "7.5.0",
+    "frontend": "Dependency-free HTML/CSS/JavaScript"
+  },
+  "not_executed": [
+    "Remote GitHub creation",
+    "GitHub Actions",
+    "Docker",
+    "pySHACL",
+    "company adapters",
+    "hosted deployment"
+  ],
+  "repo_status": "Local Git repository and bundle; authenticated private publishing script supplied",
+  "warnings": "Only documented upstream RDFLib/pyparsing deprecation messages filtered in pytest.ini.",
+  "clean_clone": {
+    "restored_from_git_bundle": true,
+    "automated_tests_passed": 43,
+    "actual_loopback_http_smoke": "health, HTML, JS, editable SPARQL and raw samples passed",
+    "details": "artifacts/clean-clone-report.json"
+  }
+}

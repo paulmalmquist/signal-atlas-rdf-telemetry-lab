@@ -1,0 +1,77 @@
+{
+  "source": "Mock requirements and reports",
+  "snapshot_at": "2026-09-14T00:00:00Z",
+  "requirements": [
+    {
+      "id": "REQ-P",
+      "label": "Pressure evidence completeness",
+      "component": "fluid-loop",
+      "property": "Pressure",
+      "revision": "A"
+    },
+    {
+      "id": "REQ-T",
+      "label": "Temperature evidence completeness",
+      "component": "fluid-loop",
+      "property": "Temperature",
+      "revision": "B"
+    },
+    {
+      "id": "REQ-V",
+      "label": "Fixture evidence completeness",
+      "component": "fixture",
+      "property": "Acceleration",
+      "revision": "A"
+    }
+  ],
+  "reports": [
+    {
+      "id": "RPT-T-101",
+      "run": "T-101",
+      "label": "Evidence package T-101",
+      "requirements": [
+        "REQ-P",
+        "REQ-T",
+        "REQ-V"
+      ],
+      "status": "draft",
+      "revision": "1"
+    },
+    {
+      "id": "RPT-T-102",
+      "run": "T-102",
+      "label": "Evidence package T-102",
+      "requirements": [
+        "REQ-P",
+        "REQ-T",
+        "REQ-V"
+      ],
+      "status": "draft",
+      "revision": "1"
+    },
+    {
+      "id": "RPT-T-103",
+      "run": "T-103",
+      "label": "Evidence package T-103",
+      "requirements": [
+        "REQ-P",
+        "REQ-T",
+        "REQ-V"
+      ],
+      "status": "draft",
+      "revision": "1"
+    },
+    {
+      "id": "RPT-T-104",
+      "run": "T-104",
+      "label": "Evidence package T-104",
+      "requirements": [
+        "REQ-P",
+        "REQ-T",
+        "REQ-V"
+      ],
+      "status": "draft",
+      "revision": "1"
+    }
+  ]
+}
